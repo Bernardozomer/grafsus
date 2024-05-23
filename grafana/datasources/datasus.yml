@@ -1,0 +1,11 @@
+apiVersion: 1
+
+datasources:
+  - name: DATASUS
+    type: mysql
+    url: db:3306
+    user: root
+    jsonData:
+      database: DATASUS
+    secureJsonData:
+      password: sus

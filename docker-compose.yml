@@ -1,0 +1,23 @@
+services:
+  grafana:
+    container_name: grafana
+    image: grafana/grafana-enterprise:11.0.0
+    environment:
+      GF_SECURITY_ADMIN_USER: sus
+      GF_SECURITY_ADMIN_PASSWORD: sus
+    ports:
+      - 80:3000
+    volumes:
+      - ./grafana/dashboards:/etc/grafana/provisioning/dashboards
+      - ./grafana/datasources:/etc/grafana/provisioning/datasources
+
+  db:
+    container_name: db
+    image: mysql:8.4
+    command: --init-file /data/application/init.sql
+    environment:
+      MYSQL_ROOT_PASSWORD: sus
+    ports:
+      - 3306:3306
+    volumes:
+      - ./data/init.sql:/data/application/init.sql
