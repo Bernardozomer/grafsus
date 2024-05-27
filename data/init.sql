@@ -1,3 +1,8 @@
+SET GLOBAL local_infile = 'ON';
+
+CREATE USER IF NOT EXISTS 'dev'@'%' IDENTIFIED WITH mysql_native_password BY 'dev';
+GRANT ALL PRIVILEGES ON *.* TO 'dev'@'%';
+
 CREATE DATABASE IF NOT EXISTS DATASUS;
 USE DATASUS;
 

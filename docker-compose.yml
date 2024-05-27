@@ -11,13 +11,26 @@ services:
       - ./grafana/dashboards:/etc/grafana/provisioning/dashboards
       - ./grafana/datasources:/etc/grafana/provisioning/datasources
 
+  data_loading:
+    container_name: data_loading
+    image: alpine:3.20
+    command: ./data/load/load.sh
+    environment:
+      DB_HOST: db
+      MYSQL_ROOT_PASSWORD: sus
+    volumes:
+      - ./data/load:/data/load
+    depends_on:
+      - db
+
   db:
     container_name: db
     image: mysql:8.4
-    command: --init-file /data/application/init.sql
+    command: --local-infile=1 --mysql_native_password=ON --init-file /data/application/init.sql
     environment:
       MYSQL_ROOT_PASSWORD: sus
     ports:
       - 3306:3306
     volumes:
       - ./data/init.sql:/data/application/init.sql
+      - ./data/load:/data/load
