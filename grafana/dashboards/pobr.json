@@ -900,10 +900,22 @@
                 "value": null
               }
             ]
-          },
-          "unit": "d"
+          }
         },
-        "overrides": []
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Tempo Médio entre Diagnóstico e Tratamento"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "d"
+              }
+            ]
+          }
+        ]
       },
       "gridPos": {
         "h": 8,
