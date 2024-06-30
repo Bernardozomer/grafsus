@@ -16,7 +16,7 @@ columns_to_drop = [
 ]
 
 cid_translation = {
-    "Sistema Digestivo": [
+    0: [
         "D00",
         "D01",
         "D37",
@@ -43,7 +43,7 @@ cid_translation = {
         "C24",
         "C26",
     ],
-    "Sistema Respiratorio": [
+    1: [
         "D02",
         "D38",
         "C10",
@@ -57,8 +57,8 @@ cid_translation = {
         "C34",
         "C39",
     ],
-    "Pele": ["D03", "D04", "C43", "C44", "C46"],
-    "Sistema Reprodutivo, Mamas": [
+    2: ["D03", "D04", "C43", "C44", "C46"],
+    3: [
         "D05",
         "D06",
         "D07",
@@ -79,9 +79,9 @@ cid_translation = {
         "C62",
         "C63",
     ],
-    "Sistema Nervoso": ["D42", "D43", "C47", "C70", "C71", "C72"],
-    "Sistema Endocrino": ["D44", "C25", "C37", "C73", "C74", "C75"],
-    "Sistema Hematologico": [
+    4: ["D42", "D43", "C47", "C70", "C71", "C72"],
+    5: ["D44", "C25", "C37", "C73", "C74", "C75"],
+    6: [
         "D45",
         "D46",
         "D47",
@@ -100,11 +100,11 @@ cid_translation = {
         "C95",
         "C96",
     ],
-    "Sistema Musculo-Esqueletico": ["C40", "C41", "C45", "C48", "C49"],
-    "Sistema Cardiaco": ["C38"],
-    "Sistema Urinario": ["C64", "C65", "C66", "C67", "C68"],
+    7: ["C40", "C41", "C45", "C48", "C49"],
+    8: ["C38"],
+    9: ["C64", "C65", "C66", "C67", "C68"],
     # Outros tem localizacoes nao especificadas, olhos e metastases
-    "Outros": ["D09", "D48", "C69", "C76", "C78", "C79", "C80", "C97"],
+    10: ["D09", "D48", "C69", "C76", "C78", "C79", "C80", "C97"],
 }
 
 cat_dict = {
@@ -128,30 +128,18 @@ cat_dict = {
     "SEXO": {"cats": ["F", "M"], "ordered": False},
     "TRATAMENTO": {
         "cats": [1, 2, 3, 4, 5],
-        "ordered": True,
+        "ordered": False,
     },
     "DIAGNOSTIC": {
         "cats": [1, 2, 3, 4],
-        "ordered": True,
+        "ordered": False,
     },
     "ESTADIAM": {
         "cats": [0, 1, 2, 3, 4, 5, 9],
         "ordered": True,
     },
     "DIAG_DETH": {
-        "cats": [
-            "Sistema Digestivo",
-            "Sistema Respiratorio",
-            "Pele",
-            "Sistema Reprodutivo, Mamas",
-            "Sistema Nervoso",
-            "Sistema Endocrino",
-            "Sistema Hematologico",
-            "Sistema Musculo-Esqueletico",
-            "Sistema Cardiaco",
-            "Sistema Urinario",
-            "Outros",
-        ],
+        "cats": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
         "ordered": False,
     },
 }
