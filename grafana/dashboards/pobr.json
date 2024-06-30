@@ -45,7 +45,7 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 5,
+        "h": 6,
         "w": 4,
         "x": 0,
         "y": 0
@@ -120,6 +120,7 @@
               "viz": false
             }
           },
+          "links": [],
           "mappings": [],
           "unit": "percent"
         },
@@ -157,7 +158,7 @@
         ]
       },
       "gridPos": {
-        "h": 5,
+        "h": 6,
         "w": 4,
         "x": 4,
         "y": 0
@@ -238,282 +239,6 @@
         "type": "mysql",
         "uid": "P900DCE57113ACEAE"
       },
-      "description": "",
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "custom": {
-            "align": "auto",
-            "cellOptions": {
-              "type": "auto"
-            },
-            "inspect": false
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          },
-          "unit": "locale"
-        },
-        "overrides": [
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "F"
-            },
-            "properties": [
-              {
-                "id": "color",
-                "value": {
-                  "fixedColor": "purple",
-                  "mode": "fixed"
-                }
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "M"
-            },
-            "properties": [
-              {
-                "id": "color",
-                "value": {
-                  "fixedColor": "blue",
-                  "mode": "fixed"
-                }
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "Sexo"
-            },
-            "properties": [
-              {
-                "id": "custom.width",
-                "value": 138
-              }
-            ]
-          }
-        ]
-      },
-      "gridPos": {
-        "h": 5,
-        "w": 4,
-        "x": 8,
-        "y": 0
-      },
-      "id": 2,
-      "options": {
-        "cellHeight": "sm",
-        "footer": {
-          "countRows": false,
-          "fields": "",
-          "reducer": [
-            "sum"
-          ],
-          "show": false
-        },
-        "showHeader": true,
-        "sortBy": [
-          {
-            "desc": true,
-            "displayName": "Quantidade"
-          }
-        ]
-      },
-      "pluginVersion": "11.0.0",
-      "targets": [
-        {
-          "dataset": "DATASUS",
-          "datasource": {
-            "type": "mysql",
-            "uid": "P900DCE57113ACEAE"
-          },
-          "editorMode": "code",
-          "format": "table",
-          "rawQuery": true,
-          "rawSql": "SELECT SEXO AS \"Sexo\", COUNT(*) As Quantidade\n  FROM DATASUS.POBR\n  WHERE ID IN ($Dados)\n GROUP BY SEXO;\n",
-          "refId": "A",
-          "sql": {
-            "columns": [
-              {
-                "parameters": [
-                  {
-                    "name": "SEXO",
-                    "type": "functionParameter"
-                  }
-                ],
-                "type": "function"
-              }
-            ],
-            "groupBy": [
-              {
-                "property": {
-                  "type": "string"
-                },
-                "type": "groupBy"
-              }
-            ],
-            "limit": 50
-          },
-          "table": "POBR"
-        }
-      ],
-      "title": "Registros por Sexo",
-      "type": "table"
-    },
-    {
-      "datasource": {
-        "type": "mysql",
-        "uid": "P900DCE57113ACEAE"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              }
-            ]
-          },
-          "unit": "d"
-        },
-        "overrides": [
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "Média"
-            },
-            "properties": [
-              {
-                "id": "color",
-                "value": {
-                  "fixedColor": "yellow",
-                  "mode": "fixed"
-                }
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "Máximo"
-            },
-            "properties": [
-              {
-                "id": "color",
-                "value": {
-                  "fixedColor": "red",
-                  "mode": "fixed"
-                }
-              }
-            ]
-          }
-        ]
-      },
-      "gridPos": {
-        "h": 5,
-        "w": 8,
-        "x": 12,
-        "y": 0
-      },
-      "id": 5,
-      "options": {
-        "colorMode": "value",
-        "graphMode": "area",
-        "justifyMode": "auto",
-        "orientation": "auto",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "showPercentChange": false,
-        "textMode": "auto",
-        "wideLayout": true
-      },
-      "pluginVersion": "11.0.0",
-      "targets": [
-        {
-          "dataset": "DATASUS",
-          "datasource": {
-            "type": "mysql",
-            "uid": "P900DCE57113ACEAE"
-          },
-          "editorMode": "code",
-          "format": "table",
-          "rawQuery": true,
-          "rawSql": "SELECT\n    MIN(days_diff) AS \"Mínimo\",\n    AVG(days_diff) AS \"Média\",\n    MAX(days_diff) AS \"Máximo\"\nFROM (\n    SELECT DATEDIFF(STR_TO_DATE(DT_TRAT, '%d/%m/%Y'), STR_TO_DATE(DT_DIAG, '%d/%m/%Y')) AS days_diff\n    FROM POBR\n    WHERE ID IN ($Dados)\n) AS subquery;",
-          "refId": "A",
-          "sql": {
-            "columns": [
-              {
-                "parameters": [],
-                "type": "function"
-              }
-            ],
-            "groupBy": [
-              {
-                "property": {
-                  "type": "string"
-                },
-                "type": "groupBy"
-              }
-            ],
-            "limit": 50
-          }
-        }
-      ],
-      "title": "Tempo entre Diagnóstico e Tratamento",
-      "transformations": [
-        {
-          "id": "filterByValue",
-          "options": {
-            "filters": [
-              {
-                "config": {
-                  "id": "isNull",
-                  "options": {}
-                },
-                "fieldName": "Tempo até Tratamento"
-              }
-            ],
-            "match": "all",
-            "type": "exclude"
-          }
-        }
-      ],
-      "type": "stat"
-    },
-    {
-      "datasource": {
-        "type": "mysql",
-        "uid": "P900DCE57113ACEAE"
-      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -565,9 +290,9 @@
         ]
       },
       "gridPos": {
-        "h": 5,
+        "h": 6,
         "w": 4,
-        "x": 20,
+        "x": 8,
         "y": 0
       },
       "id": 7,
@@ -648,6 +373,234 @@
       "fieldConfig": {
         "defaults": {
           "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "unit": "d"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Média"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "yellow",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Máximo"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "red",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 4,
+        "x": 12,
+        "y": 0
+      },
+      "id": 5,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "horizontal",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "text": {
+          "valueSize": 24
+        },
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "11.0.0",
+      "targets": [
+        {
+          "dataset": "DATASUS",
+          "datasource": {
+            "type": "mysql",
+            "uid": "P900DCE57113ACEAE"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "rawQuery": true,
+          "rawSql": "SELECT\n    MIN(days_diff) AS \"Mínimo\",\n    AVG(days_diff) AS \"Média\",\n    MAX(days_diff) AS \"Máximo\"\nFROM (\n    SELECT DATEDIFF(STR_TO_DATE(DT_TRAT, '%d/%m/%Y'), STR_TO_DATE(DT_DIAG, '%d/%m/%Y')) AS days_diff\n    FROM POBR\n    WHERE ID IN ($Dados)\n) AS subquery;",
+          "refId": "A",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          }
+        }
+      ],
+      "title": "Tempo entre Diagnóstico e Tratamento",
+      "transformations": [
+        {
+          "id": "filterByValue",
+          "options": {
+            "filters": [
+              {
+                "config": {
+                  "id": "isNull",
+                  "options": {}
+                },
+                "fieldName": "Tempo até Tratamento"
+              }
+            ],
+            "match": "all",
+            "type": "exclude"
+          }
+        }
+      ],
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "mysql",
+        "uid": "P900DCE57113ACEAE"
+      },
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            }
+          },
+          "decimals": 2,
+          "mappings": []
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 8,
+        "x": 16,
+        "y": 0
+      },
+      "id": 13,
+      "options": {
+        "displayLabels": [],
+        "legend": {
+          "displayMode": "list",
+          "placement": "right",
+          "showLegend": true,
+          "values": [
+            "percent"
+          ]
+        },
+        "pieType": "pie",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "tooltip": {
+          "maxHeight": 600,
+          "mode": "multi",
+          "sort": "desc"
+        }
+      },
+      "targets": [
+        {
+          "dataset": "DATASUS",
+          "datasource": {
+            "type": "mysql",
+            "uid": "P900DCE57113ACEAE"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "rawQuery": true,
+          "rawSql": "SELECT DIAG_DETH, (COUNT(*) * 100.0 / (SELECT COUNT(*) FROM DATASUS.POBR)) AS Porcentagem\n  FROM DATASUS.POBR\n  WHERE ID IN ($Dados)\n GROUP BY DIAG_DETH;\n",
+          "refId": "A",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          }
+        }
+      ],
+      "title": "Diagnóstico Detalhado",
+      "transformations": [
+        {
+          "id": "rowsToFields",
+          "options": {}
+        }
+      ],
+      "type": "piechart"
+    },
+    {
+      "datasource": {
+        "type": "mysql",
+        "uid": "P900DCE57113ACEAE"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
             "fixedColor": "blue",
             "mode": "palette-classic"
           },
@@ -690,7 +643,7 @@
         "h": 8,
         "w": 8,
         "x": 0,
-        "y": 5
+        "y": 6
       },
       "id": 4,
       "options": {
@@ -781,6 +734,7 @@
               "mode": "off"
             }
           },
+          "links": [],
           "mappings": [],
           "thresholds": {
             "mode": "absolute",
@@ -799,7 +753,7 @@
         "h": 8,
         "w": 8,
         "x": 8,
-        "y": 5
+        "y": 6
       },
       "id": 6,
       "options": {
@@ -864,7 +818,6 @@
         "type": "mysql",
         "uid": "P900DCE57113ACEAE"
       },
-      "description": "",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -877,7 +830,7 @@
             "axisLabel": "",
             "axisPlacement": "auto",
             "fillOpacity": 80,
-            "gradientMode": "opacity",
+            "gradientMode": "none",
             "hideFrom": {
               "legend": false,
               "tooltip": false,
@@ -898,279 +851,21 @@
               {
                 "color": "green",
                 "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
               }
             ]
           }
         },
-        "overrides": [
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "Tempo Médio entre Diagnóstico e Tratamento"
-            },
-            "properties": [
-              {
-                "id": "unit",
-                "value": "d"
-              }
-            ]
-          }
-        ]
+        "overrides": []
       },
       "gridPos": {
         "h": 8,
         "w": 8,
         "x": 16,
-        "y": 5
-      },
-      "id": 12,
-      "options": {
-        "barRadius": 0,
-        "barWidth": 0.97,
-        "fullHighlight": false,
-        "groupWidth": 0.7,
-        "legend": {
-          "calcs": [],
-          "displayMode": "list",
-          "placement": "bottom",
-          "showLegend": false
-        },
-        "orientation": "auto",
-        "showValue": "auto",
-        "stacking": "none",
-        "tooltip": {
-          "maxHeight": 600,
-          "mode": "multi",
-          "sort": "none"
-        },
-        "xTickLabelRotation": 0,
-        "xTickLabelSpacing": 0
-      },
-      "pluginVersion": "11.0.0",
-      "targets": [
-        {
-          "dataset": "DATASUS",
-          "datasource": {
-            "type": "mysql",
-            "uid": "P900DCE57113ACEAE"
-          },
-          "editorMode": "code",
-          "format": "table",
-          "rawQuery": true,
-          "rawSql": "SELECT CAST(ESTADIAM AS CHAR) AS Estadiamento, AVG(days_diff) AS \"Tempo Médio entre Diagnóstico e Tratamento\"\nFROM (\n    SELECT \n        ESTADIAM,\n        DATEDIFF(STR_TO_DATE(DT_TRAT, '%d/%m/%Y'), STR_TO_DATE(DT_DIAG, '%d/%m/%Y')) AS days_diff\n    FROM POBR\n    WHERE ESTADIAM != 'Ignorado'\n      AND ID IN ($Dados)\n) AS subquery\nGROUP BY ESTADIAM\nORDER BY ESTADIAM;\n",
-          "refId": "A",
-          "sql": {
-            "columns": [
-              {
-                "parameters": [],
-                "type": "function"
-              }
-            ],
-            "groupBy": [
-              {
-                "property": {
-                  "type": "string"
-                },
-                "type": "groupBy"
-              }
-            ],
-            "limit": 50
-          }
-        }
-      ],
-      "title": "Tempo Médio entre Diagnóstico e Tratamento por Estadiamento",
-      "type": "barchart"
-    },
-    {
-      "datasource": {
-        "type": "mysql",
-        "uid": "P900DCE57113ACEAE"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "palette-classic-by-name"
-          },
-          "custom": {
-            "axisBorderShow": false,
-            "axisCenteredZero": false,
-            "axisColorMode": "text",
-            "axisLabel": "",
-            "axisPlacement": "auto",
-            "fillOpacity": 80,
-            "gradientMode": "none",
-            "hideFrom": {
-              "legend": false,
-              "tooltip": false,
-              "viz": false
-            },
-            "lineWidth": 1,
-            "scaleDistribution": {
-              "type": "linear"
-            },
-            "thresholdsStyle": {
-              "mode": "off"
-            }
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          }
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 8,
-        "w": 8,
-        "x": 0,
-        "y": 13
-      },
-      "id": 10,
-      "options": {
-        "barRadius": 0,
-        "barWidth": 0.97,
-        "fullHighlight": false,
-        "groupWidth": 0.7,
-        "legend": {
-          "calcs": [],
-          "displayMode": "table",
-          "placement": "bottom",
-          "showLegend": true
-        },
-        "orientation": "auto",
-        "showValue": "auto",
-        "stacking": "percent",
-        "tooltip": {
-          "maxHeight": 600,
-          "mode": "multi",
-          "sort": "none"
-        },
-        "xTickLabelRotation": 0,
-        "xTickLabelSpacing": 100
-      },
-      "pluginVersion": "11.0.0",
-      "targets": [
-        {
-          "dataset": "DATASUS",
-          "datasource": {
-            "type": "mysql",
-            "uid": "P900DCE57113ACEAE"
-          },
-          "editorMode": "code",
-          "format": "table",
-          "rawQuery": true,
-          "rawSql": "SELECT CAST(IDADE AS CHAR) AS \"Idade\", TRATAMENTO AS \"Tratamento\", COUNT(*) AS \"Quantidade\"\nFROM DATASUS.POBR\nWHERE POBR.IDADE < 999\n  AND TRATAMENTO != 5\n  AND ID IN ($Dados)\nGROUP BY POBR.IDADE, TRATAMENTO\nORDER BY POBR.IDADE, TRATAMENTO;\n",
-          "refId": "A",
-          "sql": {
-            "columns": [
-              {
-                "parameters": [],
-                "type": "function"
-              }
-            ],
-            "groupBy": [
-              {
-                "property": {
-                  "type": "string"
-                },
-                "type": "groupBy"
-              }
-            ],
-            "limit": 50
-          }
-        }
-      ],
-      "title": "Tipo de Tratamento por Idade",
-      "transformations": [
-        {
-          "id": "groupingToMatrix",
-          "options": {
-            "columnField": "Tratamento",
-            "rowField": "Idade",
-            "valueField": "Quantidade"
-          }
-        },
-        {
-          "id": "organize",
-          "options": {
-            "excludeByName": {},
-            "includeByName": {},
-            "indexByName": {},
-            "renameByName": {
-              "1": "Cirurgia",
-              "2": "Quimioterapia",
-              "3": "Radioterapia",
-              "4": "Quimioterapia + Radioterapia",
-              "Idade\\Tratamento": "Idade"
-            }
-          }
-        }
-      ],
-      "type": "barchart"
-    },
-    {
-      "datasource": {
-        "type": "mysql",
-        "uid": "P900DCE57113ACEAE"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "palette-classic-by-name"
-          },
-          "custom": {
-            "axisBorderShow": false,
-            "axisCenteredZero": false,
-            "axisColorMode": "text",
-            "axisLabel": "",
-            "axisPlacement": "auto",
-            "fillOpacity": 80,
-            "gradientMode": "none",
-            "hideFrom": {
-              "legend": false,
-              "tooltip": false,
-              "viz": false
-            },
-            "lineWidth": 1,
-            "scaleDistribution": {
-              "type": "linear"
-            },
-            "thresholdsStyle": {
-              "mode": "off"
-            }
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          }
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 8,
-        "w": 8,
-        "x": 8,
-        "y": 13
+        "y": 6
       },
       "id": 11,
       "options": {
@@ -1300,6 +995,7 @@
               "mode": "off"
             }
           },
+          "links": [],
           "mappings": [],
           "thresholds": {
             "mode": "absolute",
@@ -1317,8 +1013,8 @@
       "gridPos": {
         "h": 8,
         "w": 8,
-        "x": 16,
-        "y": 13
+        "x": 0,
+        "y": 14
       },
       "id": 9,
       "options": {
@@ -1345,7 +1041,7 @@
           "editorMode": "code",
           "format": "table",
           "rawQuery": true,
-          "rawSql": "SELECT DATE(CONCAT(ANO_DIAGN, '-01-01')) AS \"Ano do Diagnóstico\", COUNT(*) AS \"Quantidade\"\nFROM DATASUS.POBR\nWHERE ID IN ($Dados)\nGROUP BY POBR.ANO_DIAGN\nORDER BY POBR.ANO_DIAGN;\n",
+          "rawSql": "SELECT DATE(CONCAT(ANO_DIAGN, '-01-02')) AS \"Ano do Diagnóstico\", COUNT(*) AS \"Quantidade\"\nFROM DATASUS.POBR\nWHERE ID IN ($Dados)\nGROUP BY POBR.ANO_DIAGN\nORDER BY POBR.ANO_DIAGN;\n",
           "refId": "A",
           "sql": {
             "columns": [
@@ -1374,21 +1070,87 @@
         "type": "mysql",
         "uid": "P900DCE57113ACEAE"
       },
-      "gridPos": {
-        "h": 4,
-        "w": 24,
-        "x": 0,
-        "y": 21
-      },
-      "id": 3,
-      "options": {
-        "code": {
-          "language": "plaintext",
-          "showLineNumbers": false,
-          "showMiniMap": false
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "fillOpacity": 80,
+            "gradientMode": "opacity",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineWidth": 1,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          }
         },
-        "content": "Regiões: (Alguma região tem mais porcentagem de tratamentos?) (Uf resid vs uf diag vs uf tratamento)\n\nTratamento: (Tipo de tratamento relaciona com idade e/ou estágio)\n\nSérie Temporal: Buscar relações entre anos (Trends Pós vs Pré Pandemia -> diagnósticos mudaram?) (Buscar tipos de câncer mais comuns)",
-        "mode": "markdown"
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Tempo Médio entre Diagnóstico e Tratamento"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "d"
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 8,
+        "x": 8,
+        "y": 14
+      },
+      "id": 12,
+      "options": {
+        "barRadius": 0,
+        "barWidth": 0.97,
+        "fullHighlight": false,
+        "groupWidth": 0.7,
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": false
+        },
+        "orientation": "auto",
+        "showValue": "auto",
+        "stacking": "none",
+        "tooltip": {
+          "maxHeight": 600,
+          "mode": "multi",
+          "sort": "none"
+        },
+        "xTickLabelRotation": 0,
+        "xTickLabelSpacing": 0
       },
       "pluginVersion": "11.0.0",
       "targets": [
@@ -1398,14 +1160,169 @@
             "type": "mysql",
             "uid": "P900DCE57113ACEAE"
           },
-          "editorMode": "builder",
+          "editorMode": "code",
           "format": "table",
-          "rawSql": "",
-          "refId": "A"
+          "rawQuery": true,
+          "rawSql": "SELECT CAST(ESTADIAM AS CHAR) AS Estadiamento, AVG(days_diff) AS \"Tempo Médio entre Diagnóstico e Tratamento\"\nFROM (\n    SELECT \n        ESTADIAM,\n        DATEDIFF(STR_TO_DATE(DT_TRAT, '%d/%m/%Y'), STR_TO_DATE(DT_DIAG, '%d/%m/%Y')) AS days_diff\n    FROM POBR\n    WHERE ESTADIAM != 'Ignorado'\n      AND ID IN ($Dados)\n) AS subquery\nGROUP BY ESTADIAM\nORDER BY ESTADIAM;\n",
+          "refId": "A",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          }
         }
       ],
-      "transparent": true,
-      "type": "text"
+      "title": "Tempo Médio entre Diagnóstico e Tratamento por Estadiamento",
+      "type": "barchart"
+    },
+    {
+      "datasource": {
+        "type": "mysql",
+        "uid": "P900DCE57113ACEAE"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "fillOpacity": 80,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineWidth": 1,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 8,
+        "x": 16,
+        "y": 14
+      },
+      "id": 10,
+      "options": {
+        "barRadius": 0,
+        "barWidth": 0.97,
+        "fullHighlight": false,
+        "groupWidth": 0.7,
+        "legend": {
+          "calcs": [],
+          "displayMode": "table",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "orientation": "auto",
+        "showValue": "auto",
+        "stacking": "percent",
+        "tooltip": {
+          "maxHeight": 600,
+          "mode": "multi",
+          "sort": "none"
+        },
+        "xTickLabelRotation": 0,
+        "xTickLabelSpacing": 100
+      },
+      "pluginVersion": "11.0.0",
+      "targets": [
+        {
+          "dataset": "DATASUS",
+          "datasource": {
+            "type": "mysql",
+            "uid": "P900DCE57113ACEAE"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "rawQuery": true,
+          "rawSql": "SELECT CAST(IDADE AS CHAR) AS \"Idade\", TRATAMENTO AS \"Tratamento\", COUNT(*) AS \"Quantidade\"\nFROM DATASUS.POBR\nWHERE POBR.IDADE < 999\n  AND TRATAMENTO != 5\n  AND ID IN ($Dados)\nGROUP BY POBR.IDADE, TRATAMENTO\nORDER BY POBR.IDADE, TRATAMENTO;\n",
+          "refId": "A",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          }
+        }
+      ],
+      "title": "Tipo de Tratamento por Idade",
+      "transformations": [
+        {
+          "id": "groupingToMatrix",
+          "options": {
+            "columnField": "Tratamento",
+            "rowField": "Idade",
+            "valueField": "Quantidade"
+          }
+        },
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {},
+            "includeByName": {},
+            "indexByName": {},
+            "renameByName": {
+              "1": "Cirurgia",
+              "2": "Quimioterapia",
+              "3": "Radioterapia",
+              "4": "Quimioterapia + Radioterapia",
+              "Idade\\Tratamento": "Idade"
+            }
+          }
+        }
+      ],
+      "type": "barchart"
     }
   ],
   "refresh": "",
@@ -1415,7 +1332,7 @@
     "list": [
       {
         "current": {
-          "selected": false,
+          "selected": true,
           "text": "All",
           "value": "$__all"
         },
@@ -1493,6 +1410,50 @@
       },
       {
         "current": {
+          "selected": true,
+          "text": [
+            "All"
+          ],
+          "value": [
+            "$__all"
+          ]
+        },
+        "definition": "SELECT DISTINCT TRATAMENTO FROM POBR",
+        "description": "",
+        "hide": 0,
+        "includeAll": true,
+        "multi": true,
+        "name": "Tratamento",
+        "options": [],
+        "query": "SELECT DISTINCT TRATAMENTO FROM POBR",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "type": "query"
+      },
+      {
+        "current": {
+          "selected": true,
+          "text": "All",
+          "value": "$__all"
+        },
+        "definition": "SELECT DISTINCT DIAG_DETH FROM POBR ORDER BY DIAG_DETH",
+        "hide": 0,
+        "includeAll": true,
+        "label": "Diagnóstico Detalhado",
+        "multi": false,
+        "name": "Diag_Deth",
+        "options": [],
+        "query": "SELECT DISTINCT DIAG_DETH FROM POBR ORDER BY DIAG_DETH",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "type": "query"
+      },
+      {
+        "current": {
           "selected": false,
           "text": "All",
           "value": "$__all"
@@ -1501,13 +1462,13 @@
           "type": "mysql",
           "uid": "P900DCE57113ACEAE"
         },
-        "definition": "SELECT ID FROM POBR WHERE SEXO IN ($Sexo) AND ANO_DIAGN IN ($Ano_Diagn) AND ESTADIAM IN ($Estadiamento)",
+        "definition": "SELECT ID FROM POBR WHERE SEXO IN ($Sexo) AND ANO_DIAGN IN ($Ano_Diagn) AND ESTADIAM IN ($Estadiamento) AND TRATAMENTO IN ($Tratamento) AND DIAG_DETH IN ($Diag_Deth)",
         "hide": 2,
         "includeAll": true,
         "multi": false,
         "name": "Dados",
         "options": [],
-        "query": "SELECT ID FROM POBR WHERE SEXO IN ($Sexo) AND ANO_DIAGN IN ($Ano_Diagn) AND ESTADIAM IN ($Estadiamento)",
+        "query": "SELECT ID FROM POBR WHERE SEXO IN ($Sexo) AND ANO_DIAGN IN ($Ano_Diagn) AND ESTADIAM IN ($Estadiamento) AND TRATAMENTO IN ($Tratamento) AND DIAG_DETH IN ($Diag_Deth)",
         "refresh": 1,
         "regex": "",
         "skipUrlSync": false,
@@ -1517,8 +1478,8 @@
     ]
   },
   "time": {
-    "from": "2013-01-01T02:00:00.000Z",
-    "to": "2024-01-01T03:00:00.000Z"
+    "from": "2012-12-01T02:00:00.000Z",
+    "to": "2024-02-01T03:00:00.000Z"
   },
   "timeRangeUpdatedDuringEditOrView": false,
   "timepicker": {
