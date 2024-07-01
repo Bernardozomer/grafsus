@@ -18,4 +18,6 @@ for feito, é possível que dados sejam duplicados no banco.
 Um script foi disponibilizado para obter um subconjunto menor a partir de um
 conjunto maior de dados no formato CSV, `data/load/subset.py`. Ele é útil
 quando a máquina não possui espaço ou poder suficiente para carregar todos os
-dados no banco e consultá-lo de forma rápida o suficiente.
+dados no banco e consultá-lo de forma rápida o suficiente. 
+
+Após a execução dos scripts de criação dos contêineres, os dashboards do Grafana estão dispoiníveis no URL `localhost:80` com o usuário e senha `sus`.
