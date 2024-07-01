@@ -863,8 +863,145 @@
       },
       "gridPos": {
         "h": 8,
-        "w": 8,
+        "w": 4,
         "x": 16,
+        "y": 6
+      },
+      "id": 10,
+      "options": {
+        "barRadius": 0,
+        "barWidth": 0.97,
+        "fullHighlight": false,
+        "groupWidth": 0.7,
+        "legend": {
+          "calcs": [],
+          "displayMode": "table",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "orientation": "auto",
+        "showValue": "auto",
+        "stacking": "percent",
+        "tooltip": {
+          "maxHeight": 600,
+          "mode": "multi",
+          "sort": "none"
+        },
+        "xTickLabelRotation": 0,
+        "xTickLabelSpacing": 100
+      },
+      "pluginVersion": "11.0.0",
+      "targets": [
+        {
+          "dataset": "DATASUS",
+          "datasource": {
+            "type": "mysql",
+            "uid": "P900DCE57113ACEAE"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "rawQuery": true,
+          "rawSql": "SELECT CAST(IDADE AS CHAR) AS \"Idade\", TRATAMENTO AS \"Tratamento\", COUNT(*) AS \"Quantidade\"\nFROM DATASUS.POBR\nWHERE POBR.IDADE < 999\n  AND TRATAMENTO != 5\n  AND ID IN ($Dados)\nGROUP BY POBR.IDADE, TRATAMENTO\nORDER BY POBR.IDADE, TRATAMENTO;\n",
+          "refId": "A",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          }
+        }
+      ],
+      "title": "Tipo de Tratamento por Idade",
+      "transformations": [
+        {
+          "id": "groupingToMatrix",
+          "options": {
+            "columnField": "Tratamento",
+            "rowField": "Idade",
+            "valueField": "Quantidade"
+          }
+        },
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {},
+            "includeByName": {},
+            "indexByName": {},
+            "renameByName": {
+              "1": "Cirurgia",
+              "2": "Quimioterapia",
+              "3": "Radioterapia",
+              "4": "Quimioterapia + Radioterapia",
+              "Idade\\Tratamento": "Idade"
+            }
+          }
+        }
+      ],
+      "type": "barchart"
+    },
+    {
+      "datasource": {
+        "type": "mysql",
+        "uid": "P900DCE57113ACEAE"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "fillOpacity": 80,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineWidth": 1,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 4,
+        "x": 20,
         "y": 6
       },
       "id": 11,
@@ -1241,7 +1378,7 @@
         "x": 16,
         "y": 14
       },
-      "id": 10,
+      "id": 14,
       "options": {
         "barRadius": 0,
         "barWidth": 0.97,
@@ -1250,7 +1387,7 @@
         "legend": {
           "calcs": [],
           "displayMode": "table",
-          "placement": "bottom",
+          "placement": "right",
           "showLegend": true
         },
         "orientation": "auto",
@@ -1275,7 +1412,7 @@
           "editorMode": "code",
           "format": "table",
           "rawQuery": true,
-          "rawSql": "SELECT CAST(IDADE AS CHAR) AS \"Idade\", TRATAMENTO AS \"Tratamento\", COUNT(*) AS \"Quantidade\"\nFROM DATASUS.POBR\nWHERE POBR.IDADE < 999\n  AND TRATAMENTO != 5\n  AND ID IN ($Dados)\nGROUP BY POBR.IDADE, TRATAMENTO\nORDER BY POBR.IDADE, TRATAMENTO;\n",
+          "rawSql": "SELECT CAST(IDADE AS CHAR) AS \"Idade\", ESTADIAM AS \"Estadiamento\", COUNT(*) AS \"Quantidade\"\nFROM DATASUS.POBR\nWHERE POBR.IDADE < 999\n  AND ESTADIAM != 'Ignorado'\n  AND ID IN ($Dados)\nGROUP BY POBR.IDADE, ESTADIAM\nORDER BY POBR.IDADE, ESTADIAM;\n",
           "refId": "A",
           "sql": {
             "columns": [
@@ -1296,12 +1433,12 @@
           }
         }
       ],
-      "title": "Tipo de Tratamento por Idade",
+      "title": "Estadiamento por Idade",
       "transformations": [
         {
           "id": "groupingToMatrix",
           "options": {
-            "columnField": "Tratamento",
+            "columnField": "Estadiamento",
             "rowField": "Idade",
             "valueField": "Quantidade"
           }
@@ -1317,6 +1454,7 @@
               "2": "Quimioterapia",
               "3": "Radioterapia",
               "4": "Quimioterapia + Radioterapia",
+              "Idade\\Estadiamento": "Idade",
               "Idade\\Tratamento": "Idade"
             }
           }
@@ -1418,6 +1556,10 @@
             "$__all"
           ]
         },
+        "datasource": {
+          "type": "mysql",
+          "uid": "P900DCE57113ACEAE"
+        },
         "definition": "SELECT DISTINCT TRATAMENTO FROM POBR",
         "description": "",
         "hide": 0,
@@ -1434,9 +1576,13 @@
       },
       {
         "current": {
-          "selected": true,
+          "selected": false,
           "text": "All",
           "value": "$__all"
+        },
+        "datasource": {
+          "type": "mysql",
+          "uid": "P900DCE57113ACEAE"
         },
         "definition": "SELECT DISTINCT DIAG_DETH FROM POBR ORDER BY DIAG_DETH",
         "hide": 0,
