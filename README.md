@@ -9,8 +9,8 @@ apenas o POBR (Painel de Oncologia do Brasil).
 
 ## Uso
 
-Dois scripts para Linux foram criados na raiz do projeto para subir e derrubar
-os contêineres facilmente, `up.sh` e `down.sh`. Para isso, é necessário ter o
+Dois scripts foram criados na raiz do projeto para subir e derrubar os
+contêineres facilmente, `up.sh` e `down.sh`. Para isso, é necessário ter o
 Docker instalado na máquina e permissão para executá-lo. `down.sh` oferece a
 opção de apagar todos os volumes Docker inutilizados no sistema; se isto não
 for feito, é possível que dados sejam duplicados no banco.
