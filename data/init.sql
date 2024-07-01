@@ -1,4 +1,5 @@
 SET GLOBAL local_infile = 'ON';
+SET GLOBAL max_allowed_packet=3221225472;
 
 CREATE USER IF NOT EXISTS 'dev'@'%' IDENTIFIED WITH mysql_native_password BY 'dev';
 GRANT ALL PRIVILEGES ON *.* TO 'dev'@'%';
