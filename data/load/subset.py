@@ -1,22 +1,24 @@
-import random
-import sys
 import os
+import sys
+
+import pandas as pd
+from sklearn.model_selection import StratifiedShuffleSplit
+
 
 def select_random_lines(input_file, num_lines):
-    # Read all lines from the input file.
-    with open(input_file, 'r') as infile:
-        lines = infile.readlines()
-
-    # Ensure the first line (header) is always included.
-    header = lines[0]
-    data_lines = lines[1:]
+    # Load the data into a pandas DataFrame
+    df = pd.read_csv(input_file)
 
     # Check if num_lines is greater than the total number of data lines.
-    if num_lines > len(data_lines):
-        raise ValueError("Number of lines to select is greater than the total number of lines in the file.")
+    if num_lines > len(df):
+        raise ValueError(
+            "Number of lines to select is greater than the total number of lines in the file."
+        )
 
-    # Randomly select line indices from the data lines.
-    selected_indices = sorted(random.sample(range(len(data_lines)), num_lines))
+    # Use StratifiedShuffleSplit to maintain the distribution of "ANO_DIAGN"
+    split = StratifiedShuffleSplit(n_splits=1, test_size=num_lines, random_state=42)
+    for _, test_index in split.split(df, df["ANO_DIAGN"]):
+        strat_test_set = df.loc[test_index]
 
     # Construct the new file name.
     base, ext = os.path.splitext(input_file)
@@ -25,12 +27,9 @@ def select_random_lines(input_file, num_lines):
     # Rename the original file.
     os.rename(input_file, renamed_file)
 
-    # Write the header and selected lines to a new file with the original input file name.
-    with open(input_file, 'w') as outfile:
-        outfile.write(header)
+    # Write the stratified subset to a new file with the original input file name.
+    strat_test_set.to_csv(input_file, index=False)
 
-        for index in selected_indices:
-            outfile.write(data_lines[index])
 
 if __name__ == "__main__":
     if len(sys.argv) != 3:
