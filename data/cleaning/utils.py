@@ -107,6 +107,31 @@ cid_translation = {
     "Outros": ["D09", "D48", "C69", "C76", "C78", "C79", "C80", "C97"],
 }
 
+trat_translation = {
+    1: "Cirurgia",
+    2: "Quimioterapia",
+    3: "Radioterapia",
+    4: "Quimioterapia + Radioterapia",
+    5: "Sem informacao de tratamento",
+}
+
+diag_translation = {
+    1: "Neoplasias Malignas",
+    2: "Neoplasias in situ",
+    3: "Neoplasias de comportamento incerto ou desconhecido",
+    4: "C44 e C73",
+}
+
+estad_translation = {
+    0: "0",
+    1: "I",
+    2: "II",
+    3: "III",
+    4: "IV",
+    5: "N/A",
+    9: "Ignorado",
+}
+
 cat_dict = {
     "ANO_DIAGN": {
         "cats": [
@@ -127,15 +152,26 @@ cat_dict = {
     },
     "SEXO": {"cats": ["F", "M"], "ordered": False},
     "TRATAMENTO": {
-        "cats": [1, 2, 3, 4, 5],
-        "ordered": True,
+        "cats": [
+            "Cirurgia",
+            "Quimioterapia",
+            "Radioterapia",
+            "Quimioterapia + Radioterapia",
+            "Sem informacao de tratamento",
+        ],
+        "ordered": False,
     },
     "DIAGNOSTIC": {
-        "cats": [1, 2, 3, 4],
-        "ordered": True,
+        "cats": [
+            "Neoplasias Malignas",
+            "Neoplasias in situ",
+            "Neoplasias de comportamento incerto ou desconhecido",
+            "C44 e C73",
+        ],
+        "ordered": False,
     },
     "ESTADIAM": {
-        "cats": [0, 1, 2, 3, 4, 5, 9],
+        "cats": ["0", "I", "II", "III", "IV", "N/A", "Ignorado"],
         "ordered": True,
     },
     "DIAG_DETH": {
